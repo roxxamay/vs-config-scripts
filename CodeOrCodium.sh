@@ -19,6 +19,49 @@ cat << "EOF"
  ╚═════╝ ╚═════╝ ╚═════╝ ╚═╝ ╚═════╝ ╚═╝     ╚═╝                   
 
 EOF
+
+cat << "EOF"
+
+ █████╗ ██╗   ██╗██████╗     ██╗  ██╗███████╗██╗     ██████╗ ███████╗██████╗ 
+██╔══██╗██║   ██║██╔══██╗    ██║  ██║██╔════╝██║     ██╔══██╗██╔════╝██╔══██╗
+███████║██║   ██║██████╔╝    ███████║█████╗  ██║     ██████╔╝█████╗  ██████╔╝
+██╔══██║██║   ██║██╔══██╗    ██╔══██║██╔══╝  ██║     ██╔═══╝ ██╔══╝  ██╔══██╗
+██║  ██║╚██████╔╝██║  ██║    ██║  ██║███████╗███████╗██║     ███████╗██║  ██║
+╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═╝    ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝     ╚══════╝╚═╝  ╚═╝
+
+EOF
+
+#function to install paru
+install_paru(){
+    echo "INSTALLING PARU......"
+    git clone https://aur.archlinux.org/paru.git
+    cd paru
+    makepkg -si
+    cd ..
+    echo "PARU INSTALLED SUCCESSFULLY....."
+}
+
+#function to install yay
+install_yay(){
+    echo "INSTALLING YAY......"
+    git clone https://aur.archlinux.org/yay.git
+    cd yay
+    makepkg -si
+    cd ..
+    echo "YAY INSTALLED SUCCESSFULLY......"
+}
+
+#CHECKING IF PARU IS INSTALLED
+
+if command -v paru &> /dev/null; then
+    echo "PARU IS ALREADY INSTALLED.."
+    paru_installed=true
+else
+    echo "PARU IS NOT INSTALLED..."
+    paru_installed=false
+fi
+
+
 # Name of the package to check
 PACKAGE_NAME="CODE"
 echo "CHECKING IF VSCODE IS INSTALLED OR NOT"
@@ -29,7 +72,8 @@ if pacman -Q $PACKAGE_NAME &> /dev/null; then
     echo "installing Visual studio code Extension"
     echo 
     echo "INSTALLING C/C++ EXTENSION PACK"
-    $PACKAGE_NAME --install-extension ms-vscode.cpptools-extension-pack
+    $PACKAGE_NAME --install-extension ms-vscode.cpptools
+    $PACKAGE_NAME --install-extension ms-vscode.cmake-tools
     echo
     echo "INSTALLING $PACKAGE_NAME RUNNER"
     $PACKAGE_NAME --install-extension formulahendry.code-runner
@@ -41,7 +85,13 @@ if pacman -Q $PACKAGE_NAME &> /dev/null; then
     $PACKAGE_NAME --install-extension esbenp.prettier-vscode
     echo
     echo "INSTALLING EXTENSION PACK FOR JAVA"
-    $PACKAGE_NAME --install-extension vscjava.vscode-java-pack
+    $PACKAGE_NAME --install-extension VisualStudioExptTeam.vscodeintellicode
+    $PACKAGE_NAME --install-extension redhat.java
+    $PACKAGE_NAME --install-extension vscjava.vscode-java-test
+    $PACKAGE_NAME --install-extension vscjava.vscode-maven
+    $PACKAGE_NAME --install-extension vscjava.vscode-java-dependency
+    $PACKAGE_NAME --install-extension vscjava.vscode-java-debug
+
     echo
     echo "INSTALLING ONE DARK THEME"
     $PACKAGE_NAME --install-extension azemoh.theme-onedark
