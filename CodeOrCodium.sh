@@ -93,9 +93,11 @@ EOF
 echo
 echo
 echo "INSTALLING VSCODE OR VS CODIUM USING AUR HELPER"
+echo "---------MENU--------"
 echo
 echo "1. VS CODE"
 echo "2. VS CODIUM"
+echo "3. INSTALLING EXTENSION"
 read -p "ENTER YOUR CHOICE(1/2) : " option
 
     case $option in
@@ -110,13 +112,22 @@ read -p "ENTER YOUR CHOICE(1/2) : " option
             paru -S --noconfirm --needed vscodium
             PACKAGE_NAME="codium"
             ;;
+        3)
+            install_extension
+            ;;
+        4)  
+            install_font
+            ;;
+        5)
+            copying_setting
+            ;;
+
     esac
 
 
 
-
-
-# Check if the package is installed
+install_extension(){
+    # Check if the package is installed
 if pacman -Q $PACKAGE_NAME &> /dev/null; then
     echo "VS CODE IS  INSTALLED."
     echo
@@ -151,9 +162,11 @@ if pacman -Q $PACKAGE_NAME &> /dev/null; then
 else
     echo "VSCODE OR VSCODIUM is not installed."
 fi
+}
 
 
-echo
+install_font(){
+    echo
 echo
 echo
 cat << "EOF"
@@ -177,7 +190,11 @@ EOF
 yay -S --noconfirm --needed ttf-victor-mono
 paru -S --noconfirm --needed ttf-victor-mono
 
-echo
+}
+
+
+copying_setting(){
+    echo
 echo
 echo
 
@@ -242,3 +259,4 @@ if pacman -Q codium &> /dev/null; then
 
     echo "File ${FILENAME} copied to ${DEST_DIR}"
 fi
+}
