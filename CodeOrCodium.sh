@@ -51,20 +51,71 @@ install_yay(){
     echo "YAY INSTALLED SUCCESSFULLY......"
 }
 
-#CHECKING IF PARU IS INSTALLED
 
-if command -v paru &> /dev/null; then
-    echo "PARU IS ALREADY INSTALLED.."
-    paru_installed=true
+if command -v paru &> /dev/null || command -v yay &> /dev/null;then
+    echo "PARU OR YAY IS ALREADY INSTALLED.... SKIPPING INSTALLATION CHOICE..."
 else
-    echo "PARU IS NOT INSTALLED..."
-    paru_installed=false
+    echo "WHICH AUR HELPER WOULD YOU LIKE TO INSTALL"
+    echo "1. PARU"
+    echo "2. YAY"
+    read -p "ENTER YOUR CHOICE(1/2): " choice
+
+    case $choice in
+        1)
+            install_paru
+            ;;
+    
+        2)
+            install_yay
+            ;;
+        *)
+            echo "Invalid choice. EXITING....."
+            exit 1
+            ;;
+    esac
 fi
 
+echo "CONTINUING WITH THE REST OF THE SCRIPT....."
+echo
+echo
 
-# Name of the package to check
-PACKAGE_NAME="CODE"
-echo "CHECKING IF VSCODE IS INSTALLED OR NOT"
+cat << "EOF"
+    
+██╗███╗   ██╗███████╗████████╗ █████╗ ██╗     ██╗     ██╗███╗   ██╗ ██████╗      ██████╗ ██████╗ ██████╗ ███████╗     ██████╗ ██████╗      ██████╗ ██████╗ ██████╗ ██╗██╗   ██╗███╗   ███╗
+██║████╗  ██║██╔════╝╚══██╔══╝██╔══██╗██║     ██║     ██║████╗  ██║██╔════╝     ██╔════╝██╔═══██╗██╔══██╗██╔════╝    ██╔═══██╗██╔══██╗    ██╔════╝██╔═══██╗██╔══██╗██║██║   ██║████╗ ████║
+██║██╔██╗ ██║███████╗   ██║   ███████║██║     ██║     ██║██╔██╗ ██║██║  ███╗    ██║     ██║   ██║██║  ██║█████╗      ██║   ██║██████╔╝    ██║     ██║   ██║██║  ██║██║██║   ██║██╔████╔██║
+██║██║╚██╗██║╚════██║   ██║   ██╔══██║██║     ██║     ██║██║╚██╗██║██║   ██║    ██║     ██║   ██║██║  ██║██╔══╝      ██║   ██║██╔══██╗    ██║     ██║   ██║██║  ██║██║██║   ██║██║╚██╔╝██║
+██║██║ ╚████║███████║   ██║   ██║  ██║███████╗███████╗██║██║ ╚████║╚██████╔╝    ╚██████╗╚██████╔╝██████╔╝███████╗    ╚██████╔╝██║  ██║    ╚██████╗╚██████╔╝██████╔╝██║╚██████╔╝██║ ╚═╝ ██║
+╚═╝╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝╚═╝  ╚═══╝ ╚═════╝      ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝     ╚═════╝ ╚═╝  ╚═╝     ╚═════╝ ╚═════╝ ╚═════╝ ╚═╝ ╚═════╝ ╚═╝     ╚═╝
+
+EOF
+
+echo
+echo
+echo "INSTALLING VSCODE OR VS CODIUM USING AUR HELPER"
+echo
+echo "1. VS CODE"
+echo "2. VS CODIUM"
+read -p "ENTER YOUR CHOICE(1/2) : " option
+
+    case $option in
+        1)
+            yay -S --noconfirm --needed visual-studio-code-bin
+            paru -S --noconfirm --needed visual-studio-code-bin
+            PACKAGE_NAME="code"
+            ;;
+    
+        2)
+            yay -S --noconfirm --needed vscodium
+            paru -S --noconfirm --needed vscodium
+            PACKAGE_NAME="codium"
+            ;;
+    esac
+
+
+
+
+
 # Check if the package is installed
 if pacman -Q $PACKAGE_NAME &> /dev/null; then
     echo "VS CODE IS  INSTALLED."
@@ -98,38 +149,96 @@ if pacman -Q $PACKAGE_NAME &> /dev/null; then
 
 
 else
-    echo "CODE is not installed."
+    echo "VSCODE OR VSCODIUM is not installed."
 fi
 
 
-echo "CHECKING CODIUM IS INSTALLED OR NOT"
+echo
+echo
+echo
+cat << "EOF"
 
-PACKAGE_NAME="codium"
+██╗███╗   ██╗███████╗████████╗ █████╗ ██╗     ██╗     ██╗███╗   ██╗ ██████╗ 
+██║████╗  ██║██╔════╝╚══██╔══╝██╔══██╗██║     ██║     ██║████╗  ██║██╔════╝ 
+██║██╔██╗ ██║███████╗   ██║   ███████║██║     ██║     ██║██╔██╗ ██║██║  ███╗
+██║██║╚██╗██║╚════██║   ██║   ██╔══██║██║     ██║     ██║██║╚██╗██║██║   ██║
+██║██║ ╚████║███████║   ██║   ██║  ██║███████╗███████╗██║██║ ╚████║╚██████╔╝
+╚═╝╚═╝  ╚═══╝╚══════╝   ╚═╝   ╚═╝  ╚═╝╚══════╝╚══════╝╚═╝╚═╝  ╚═══╝ ╚═════╝ 
+                                                                            
+███████╗ ██████╗ ███╗   ██╗████████╗███████╗                                
+██╔════╝██╔═══██╗████╗  ██║╚══██╔══╝██╔════╝                                
+█████╗  ██║   ██║██╔██╗ ██║   ██║   ███████╗                                
+██╔══╝  ██║   ██║██║╚██╗██║   ██║   ╚════██║                                
+██║     ╚██████╔╝██║ ╚████║   ██║   ███████║                                
+╚═╝      ╚═════╝ ╚═╝  ╚═══╝   ╚═╝   ╚══════╝                                
 
-# Check if the package is installed
-if pacman -Q $PACKAGE_NAME &> /dev/null; then
-    echo "$PACKAGE_NAME is installed."
-    echo "installing Visual studio $PACKAGE_NAME Extension"
-    echo 
-    echo "INSTALLING C/C++ EXTENSION PACK"
-    $PACKAGE_NAME --install-extension ms-vscode.cpptools-extension-pack
-    echo
-    echo "INSTALLING $PACKAGE_NAME RUNNER"
-    $PACKAGE_NAME --install-extension formulahendry.$PACKAGE_NAME-runner
-    echo
-    echo "INSTALLING DOXYGEN DOCUMENTATION GENERATOR"
-    $PACKAGE_NAME --install-extension cschlosser.doxdocgen
-    echo
-    echo "INSTALLING PRETIER : $PACKAGE_NAME FORMATTER"
-    $PACKAGE_NAME --install-extension esbenp.prettier-vscode
-    echo
-    echo "INSTALLING EXTENSION PACK FOR JAVA"
-    $PACKAGE_NAME --install-extension vscjava.vscode-java-pack
-    echo
-    echo "INSTALLING ONE DARK THEME"
-    $PACKAGE_NAME --install-extension azemoh.theme-onedark
+EOF
 
+yay -S --noconfirm --needed ttf-victor-mono
+paru -S --noconfirm --needed ttf-victor-mono
 
-else
-    echo "$PACKAGE_NAME is not installed."
+echo
+echo
+echo
+
+cat << "EOF"
+
+ ██████╗ ██████╗ ██████╗ ██╗   ██╗██╗███╗   ██╗ ██████╗                                               
+██╔════╝██╔═══██╗██╔══██╗╚██╗ ██╔╝██║████╗  ██║██╔════╝                                               
+██║     ██║   ██║██████╔╝ ╚████╔╝ ██║██╔██╗ ██║██║  ███╗                                              
+██║     ██║   ██║██╔═══╝   ╚██╔╝  ██║██║╚██╗██║██║   ██║                                              
+╚██████╗╚██████╔╝██║        ██║   ██║██║ ╚████║╚██████╔╝                                              
+ ╚═════╝ ╚═════╝ ╚═╝        ╚═╝   ╚═╝╚═╝  ╚═══╝ ╚═════╝                                               
+                                                                                                      
+███████╗███████╗████████╗████████╗██╗███╗   ██╗ ██████╗ ███████╗        ██╗███████╗ ██████╗ ███╗   ██╗
+██╔════╝██╔════╝╚══██╔══╝╚══██╔══╝██║████╗  ██║██╔════╝ ██╔════╝        ██║██╔════╝██╔═══██╗████╗  ██║
+███████╗█████╗     ██║      ██║   ██║██╔██╗ ██║██║  ███╗███████╗        ██║███████╗██║   ██║██╔██╗ ██║
+╚════██║██╔══╝     ██║      ██║   ██║██║╚██╗██║██║   ██║╚════██║   ██   ██║╚════██║██║   ██║██║╚██╗██║
+███████║███████╗   ██║      ██║   ██║██║ ╚████║╚██████╔╝███████║██╗╚█████╔╝███████║╚██████╔╝██║ ╚████║
+╚══════╝╚══════╝   ╚═╝      ╚═╝   ╚═╝╚═╝  ╚═══╝ ╚═════╝ ╚══════╝╚═╝ ╚════╝ ╚══════╝ ╚═════╝ ╚═╝  ╚═══╝
+                                                                                                      
+███████╗██╗██╗     ███████╗    ████████╗ ██████╗      ██████╗ ██████╗ ███╗   ██╗███████╗██╗ ██████╗   
+██╔════╝██║██║     ██╔════╝    ╚══██╔══╝██╔═══██╗    ██╔════╝██╔═══██╗████╗  ██║██╔════╝██║██╔════╝   
+█████╗  ██║██║     █████╗         ██║   ██║   ██║    ██║     ██║   ██║██╔██╗ ██║█████╗  ██║██║  ███╗  
+██╔══╝  ██║██║     ██╔══╝         ██║   ██║   ██║    ██║     ██║   ██║██║╚██╗██║██╔══╝  ██║██║   ██║  
+██║     ██║███████╗███████╗       ██║   ╚██████╔╝    ╚██████╗╚██████╔╝██║ ╚████║██║     ██║╚██████╔╝  
+╚═╝     ╚═╝╚══════╝╚══════╝       ╚═╝    ╚═════╝      ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝     ╚═╝ ╚═════╝   
+
+EOF
+
+if pacman -Q code &> /dev/null; then
+    # Get the directory of the script
+    SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+    # Specify the filename you want to copy.
+    # Replace 'yourfile.txt' with the actual file name.
+    FILENAME="settings.json"
+
+    # Specify the destination configuration directory.
+    # Replace '/path/to/config' with the actual path to your configuration directory.
+    DEST_DIR="~/.config/Code/User/"
+
+    # Copy the file to the destination directory
+    cp "${SCRIPT_DIR}/${FILENAME}" "${DEST_DIR}/"
+
+    echo "File ${FILENAME} copied to ${DEST_DIR}"
+fi
+
+echo
+if pacman -Q codium &> /dev/null; then
+    # Get the directory of the script
+    SCRIPT_DIR="$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+
+    # Specify the filename you want to copy.
+    # Replace 'yourfile.txt' with the actual file name.
+    FILENAME="settings.json"
+
+    # Specify the destination configuration directory.
+    # Replace '/path/to/config' with the actual path to your configuration directory.
+    DEST_DIR="~/.config/VSCodium/User/"
+
+    # Copy the file to the destination directory
+    cp "${SCRIPT_DIR}/${FILENAME}" "${DEST_DIR}/"
+
+    echo "File ${FILENAME} copied to ${DEST_DIR}"
 fi
