@@ -90,42 +90,6 @@ cat << "EOF"
 
 EOF
 
-echo
-echo
-echo "INSTALLING VSCODE OR VS CODIUM USING AUR HELPER"
-echo "---------MENU--------"
-echo
-echo "1. VS CODE"
-echo "2. VS CODIUM"
-echo "3. INSTALLING EXTENSION"
-read -p "ENTER YOUR CHOICE(1/2) : " option
-
-    case $option in
-        1)
-            yay -S --noconfirm --needed visual-studio-code-bin
-            paru -S --noconfirm --needed visual-studio-code-bin
-            PACKAGE_NAME="code"
-            ;;
-    
-        2)
-            yay -S --noconfirm --needed vscodium
-            paru -S --noconfirm --needed vscodium
-            PACKAGE_NAME="codium"
-            ;;
-        3)
-            install_extension
-            ;;
-        4)  
-            install_font
-            ;;
-        5)
-            copying_setting
-            ;;
-
-    esac
-
-
-
 install_extension(){
     # Check if the package is installed
 if pacman -Q $PACKAGE_NAME &> /dev/null; then
@@ -233,7 +197,7 @@ if pacman -Q code &> /dev/null; then
 
     # Specify the destination configuration directory.
     # Replace '/path/to/config' with the actual path to your configuration directory.
-    DEST_DIR="~/.config/Code/User/"
+    DEST_DIR="$HOME/.config/Code/User"
 
     # Copy the file to the destination directory
     cp "${SCRIPT_DIR}/${FILENAME}" "${DEST_DIR}/"
@@ -252,7 +216,7 @@ if pacman -Q codium &> /dev/null; then
 
     # Specify the destination configuration directory.
     # Replace '/path/to/config' with the actual path to your configuration directory.
-    DEST_DIR="~/.config/VSCodium/User/"
+    DEST_DIR="$HOME/.config/VSCodium/User"
 
     # Copy the file to the destination directory
     cp "${SCRIPT_DIR}/${FILENAME}" "${DEST_DIR}/"
@@ -260,3 +224,40 @@ if pacman -Q codium &> /dev/null; then
     echo "File ${FILENAME} copied to ${DEST_DIR}"
 fi
 }
+
+
+echo
+echo
+echo "INSTALLING VSCODE OR VS CODIUM USING AUR HELPER"
+echo "---------MENU--------"
+echo
+echo "1. VS CODE"
+echo "2. VS CODIUM"
+echo "3. INSTALLING EXTENSION"
+echo "4. INSTALLING FONTS"
+echo "5. COPYING SETTINGS.JSON FILE TO CONFIG"
+read -p "ENTER YOUR CHOICE(1/2) : " option
+
+    case $option in
+        1)
+            yay -S --noconfirm --needed visual-studio-code-bin
+            paru -S --noconfirm --needed visual-studio-code-bin
+            PACKAGE_NAME="code"
+            ;;
+    
+        2)
+            yay -S --noconfirm --needed vscodium
+            paru -S --noconfirm --needed vscodium
+            PACKAGE_NAME="codium"
+            ;;
+        3)
+            install_extension
+            ;;
+        4)  
+            install_font
+            ;;
+        5)
+            copying_setting
+            ;;
+
+    esac
